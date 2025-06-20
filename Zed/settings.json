@@ -1,0 +1,205 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "icon_theme": "Zed (Default)",
+  "collaboration_panel": {
+    "button": false
+  },
+  "search": {
+    "button": false
+  },
+  "notification_panel": {
+    "button": false
+  },
+  "outline_panel": {
+    "button": false
+  },
+  "debugger": {
+    "button": false
+  },
+  "scrollbar": {
+    "axes": {
+      "horizontal": false
+    }
+  },
+  "context_servers": {
+    "mcp-server-github": {
+      "settings": {
+        "github_personal_access_token": "<GH_TOKEN>"
+      }
+    },
+    "mcp-server-context7": {
+      "settings": {
+        "default_minimum_tokens": "10000"
+      }
+    },
+    "browser-tools-context-server": {
+      "settings": {
+        "port": 4827,
+        "host": "127.0.0.1",
+        "server_command": "npx",
+        "server_args": ["@agentdeskai/browser-tools-server@1.2.0"]
+      }
+    },
+    "mcp-server-brave-search": {
+      "settings": {
+        "brave_api_key": "<BRAVE_API_KEY>"
+      }
+    }
+  },
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "edit_predictions": {
+    "disabled_globs": [".env", "leetcode.py"]
+  },
+  "agent": {
+    "play_sound_when_agent_done": false,
+    "always_allow_tool_actions": true,
+    "default_profile": "god",
+    "profiles": {
+      "god": {
+        "name": "God",
+        "tools": {
+          "web_search": true,
+          "thinking": true,
+          "terminal": true,
+          "read_file": true,
+          "open": true,
+          "now": true,
+          "move_path": true,
+          "list_directory": true,
+          "grep": true,
+          "find_path": true,
+          "fetch": true,
+          "edit_file": true,
+          "diagnostics": true,
+          "delete_path": true,
+          "create_directory": true,
+          "copy_path": true
+        },
+        "enable_all_context_servers": false,
+        "context_servers": {
+          "mcp-server-brave-search": {
+            "tools": {
+              "brave_web_search": true,
+              "brave_local_search": true
+            }
+          },
+          "mcp-server-sequential-thinking": {
+            "tools": {
+              "sequentialthinking": true
+            }
+          },
+          "mcp-server-context7": {
+            "tools": {
+              "resolve-library-id": true,
+              "get-library-docs": true
+            }
+          },
+          "mcp-server-github": {
+            "tools": {
+              "submit_pending_pull_request_review": true,
+              "mark_all_notifications_read": true,
+              "manage_repository_notification_subscription": true,
+              "manage_notification_subscription": true,
+              "list_notifications": true,
+              "get_pull_request_diff": true,
+              "get_notification_details": true,
+              "dismiss_notification": true,
+              "delete_pending_pull_request_review": true,
+              "create_pending_pull_request_review": true,
+              "create_and_submit_pull_request_review": true,
+              "assign_copilot_to_issue": true,
+              "add_pull_request_review_comment_to_pending_review": true,
+              "update_pull_request_branch": true,
+              "update_pull_request": true,
+              "update_issue": true,
+              "search_users": true,
+              "search_issues": true,
+              "search_repositories": true,
+              "search_code": true,
+              "request_copilot_review": true,
+              "push_files": true,
+              "merge_pull_request": true,
+              "list_secret_scanning_alerts": true,
+              "list_tags": true,
+              "list_pull_requests": true,
+              "list_issues": true,
+              "list_commits": true,
+              "list_branches": true,
+              "list_code_scanning_alerts": true,
+              "get_tag": true,
+              "get_secret_scanning_alert": true,
+              "get_pull_request_status": true,
+              "get_pull_request_reviews": true,
+              "get_pull_request_comments": true,
+              "get_pull_request_files": true,
+              "get_pull_request": true,
+              "get_me": true,
+              "get_issue_comments": true,
+              "get_issue": true,
+              "get_file_contents": true,
+              "get_commit": true,
+              "get_code_scanning_alert": true,
+              "fork_repository": true,
+              "delete_file": true,
+              "create_repository": true,
+              "create_pull_request_review": true,
+              "create_pull_request": true,
+              "create_or_update_file": true,
+              "create_issue": true,
+              "create_branch": true,
+              "add_pull_request_review_comment": true,
+              "add_issue_comment": true
+            }
+          }
+        }
+      }
+    },
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4-thinking"
+    },
+    "version": "2"
+  },
+  "theme": "Dogi Dark",
+  "autosave": "on_focus_change",
+  "languages": {
+    "Python": {
+      "show_edit_predictions": true,
+      "format_on_save": "on",
+      "language_servers": ["ruff"],
+      "formatter": [
+        {
+          "code_actions": {
+            "source.organizeImports.ruff": true,
+            "source.fixAll.ruff": true
+          }
+        },
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        }
+      ]
+    }
+  },
+  "lsp": {
+    "ruff": {
+      "initialization_options": {
+        "settings": {
+          "lint": {
+            "extendSelect": ["I"]
+          }
+        }
+      }
+    }
+  }
+}
