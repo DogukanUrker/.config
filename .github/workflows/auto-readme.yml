@@ -1,0 +1,236 @@
+name: 🤖 Auto-Generate README
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - "README.md"
+      - ".github/**"
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  auto-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          token: ${{ secrets.SUBMODULE_TOKEN }}
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: 🔍 Analyze Repository Structure
+        run: |
+          python3 << 'EOF'
+          import os
+          import json
+          from datetime import datetime
+
+          def scan_directory():
+              structure = {
+                  'directories': [],
+                  'files': [],
+                  'configs': [],
+                  'total_size': 0,
+                  'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')
+              }
+
+              for root, dirs, files in os.walk('.'):
+                  # Skip hidden directories except .github
+                  dirs[:] = [d for d in dirs if not d.startswith('.') or d == '.github']
+
+                  rel_root = os.path.relpath(root, '.')
+                  if rel_root != '.' and not rel_root.startswith('.git'):
+                      structure['directories'].append(rel_root)
+
+                  for file in files:
+                      if file.startswith('.git'):
+                          continue
+
+                      filepath = os.path.join(root, file)
+                      rel_filepath = os.path.relpath(filepath, '.')
+
+                      try:
+                          size = os.path.getsize(filepath)
+                          file_info = {
+                              'path': rel_filepath,
+                              'name': file,
+                              'size': size,
+                              'directory': os.path.dirname(rel_filepath) or 'root'
+                          }
+
+                          structure['files'].append(file_info)
+                          structure['total_size'] += size
+
+                          if any(ext in file.lower() for ext in ['.json', '.yml', '.yaml', 'config', '.toml']):
+                              structure['configs'].append(file_info)
+                      except:
+                          pass
+
+              return structure
+
+          repo_data = scan_directory()
+
+          with open('repo_analysis.json', 'w') as f:
+              json.dump(repo_data, f, indent=2)
+
+          print(f"Analysis complete: {len(repo_data['directories'])} dirs, {len(repo_data['files'])} files")
+          EOF
+
+      - name: 🎨 Generate Dynamic README
+        run: |
+          python3 << 'EOF'
+          import json
+          import os
+          from datetime import datetime
+
+          with open('repo_analysis.json', 'r') as f:
+              data = json.load(f)
+
+          def format_size(bytes_val):
+              for unit in ['B', 'KB', 'MB', 'GB']:
+                  if bytes_val < 1024.0:
+                      return f"{bytes_val:.1f} {unit}"
+                  bytes_val /= 1024.0
+              return f"{bytes_val:.1f} TB"
+
+          # Generate README content
+          now = datetime.now()
+
+          readme_lines = [
+              "# 🛠️ .config",
+              "",
+              "> **Dynamic dotfiles repository**",
+              f"> Auto-generated on {now.strftime('%Y-%m-%d %H:%M:%S UTC')}",
+              "",
+              "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+              "[![Auto-Updated](https://img.shields.io/badge/Auto--Updated-✅-green.svg)](https://github.com/DogukanUrker/.config/actions)",
+              f"[![Files](https://img.shields.io/badge/Files-{len(data['files'])}-blue.svg)](#)",
+              f"[![Size](https://img.shields.io/badge/Size-{format_size(data['total_size'])}-orange.svg)](#)",
+              "",
+              "## 📊 Repository Stats",
+              "",
+              "| Metric | Value |",
+              "|--------|-------|",
+              f"| 📁 **Directories** | {len(data['directories'])} |",
+              f"| 📄 **Files** | {len(data['files'])} |",
+              f"| ⚙️ **Config Files** | {len(data['configs'])} |",
+              f"| 📦 **Total Size** | {format_size(data['total_size'])} |",
+              f"| 🕐 **Last Updated** | {now.strftime('%Y-%m-%d %H:%M:%S UTC')} |",
+              "",
+              "## 🏗️ What's Inside",
+              "",
+              "Professional development environment configurations:",
+              "",
+              "- ⚡ **Zed Editor**: Modern code editor with AI integration",
+              "- 👻 **Ghostty Terminal**: GPU-accelerated terminal emulator",
+              "- 🤖 **AI Rules**: Expert software engineering guidelines",
+              "",
+              "## 📁 Directory Structure",
+              "",
+              "```",
+              ".config/"
+          ]
+
+          # Build tree structure
+          dirs = sorted([d for d in data['directories'] if d != '.'])
+          for directory in dirs:
+              depth = directory.count('/')
+              indent = '│   ' * depth
+              dirname = os.path.basename(directory)
+              readme_lines.append(f"{indent}├── {dirname}/")
+
+          # Add root files
+          root_files = [f for f in data['files'] if f['directory'] == 'root' and not f['name'].startswith('.')]
+          for file_info in sorted(root_files, key=lambda x: x['name']):
+              readme_lines.append(f"├── {file_info['name']}")
+
+          readme_lines.extend([
+              "```",
+              "",
+              "## 🚀 Quick Installation",
+              "",
+              "```bash",
+              "# Clone and install",
+              "git clone --recursive https://github.com/DogukanUrker/.config.git",
+              "cd .config",
+              "chmod +x scripts/install.sh",
+              "./scripts/install.sh",
+              "```",
+              "",
+              "## 🤖 Automation Features",
+              "",
+              "This repository is **fully automated** using GitHub Actions:",
+              "",
+              "- ✅ **Auto-README**: Updates when structure changes",
+              "- ✅ **Config Validation**: Validates all configuration files",
+              "- ✅ **Security Scanning**: Prevents credential leaks",
+              "- ✅ **Submodule Sync**: Keeps private configs synchronized",
+              "- ✅ **Auto-Release**: Creates releases based on commits",
+              "",
+              "## 🔐 Security",
+              "",
+              "- **Dual-layer security**: Public configs with placeholders, private submodule with real credentials",
+              "- **Automatic validation**: Prevents accidental credential exposure",
+              "- **Safe defaults**: All sensitive data properly templated",
+              "",
+              "## 📄 License",
+              "",
+              "MIT License - see [LICENSE](LICENSE) for details.",
+              "",
+              "## 👨‍💻 Author",
+              "",
+              "**Doğukan Ürker**",
+              "- GitHub: [@DogukanUrker](https://github.com/DogukanUrker)",
+              "",
+              "---",
+              "",
+              "<div align=\"center\">",
+              "  <sub>🤖 This README was auto-generated by GitHub Actions</sub><br>",
+              f"  <sub>Last updated: {data['last_updated']}</sub>",
+              "</div>"
+          ])
+
+          readme_content = '\n'.join(readme_lines)
+
+          with open('README.md', 'w', encoding='utf-8') as f:
+              f.write(readme_content)
+
+          print("✅ README.md generated successfully!")
+          EOF
+
+      - name: 📤 Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          if [[ `git status --porcelain` ]]; then
+            git add README.md
+            git commit -m "🤖 Auto-update README.md
+
+            - Updated repository statistics
+            - Refreshed directory structure
+            - Added new configuration details
+
+            Generated on: $(date -u)"
+
+            git push
+            echo "✅ README updated and committed!"
+          else
+            echo "ℹ️ No changes to commit"
+          fi
+
+      - name: 🧹 Cleanup
+        run: |
+          rm -f repo_analysis.json
