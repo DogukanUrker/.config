@@ -2,7 +2,7 @@
 
 All my dev configs in one place.
 
-## Apps
+## Apps/Tools
 
 - AI-Rules
 - Ghostty
