@@ -21,8 +21,6 @@ cd .config
 - **Public repository**: Config files with placeholder values for sensitive data
 - **Private submodule** (`secret/`): Raw config files containing actual API keys, tokens, and credentials
 
-When setting up a new machine, the private submodule automatically provides all the real credentials.
-
 ## License
 
 MIT License
