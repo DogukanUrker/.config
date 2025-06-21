@@ -1,8 +1,8 @@
 # .config
 
-All my dev configs in one place
+All my dev configs in one place.
 
-## Apps Configured
+## Apps
 
 - AI-Rules
 - Ghostty
@@ -18,11 +18,10 @@ cd .config
 
 ## Security
 
-This repository uses a dual-layer approach:
-- Public repo: Contains configurations with placeholders for sensitive data
-- Private submodule (secret/): Stores actual credentials and tokens
+- **Public repository**: Config files with placeholder values for sensitive data
+- **Private submodule** (`secret/`): Raw config files containing actual API keys, tokens, and credentials
 
-This allows me to share my configs publicly while keeping sensitive data secure.
+When setting up a new machine, the private submodule automatically provides all the real credentials.
 
 ## License
 
