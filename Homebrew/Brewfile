@@ -60,14 +60,5 @@ cask "obs"
 cask "postman"
 # System monitor for the menu bar
 cask "stats"
-# Open-source code editor
-cask "visual-studio-code"
 # Multiplayer code editor
 cask "zed"
-vscode "dbaeumer.vscode-eslint"
-vscode "mechatroner.rainbow-csv"
-vscode "ms-python.debugpy"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "openai.chatgpt"
-vscode "vue.volar"
