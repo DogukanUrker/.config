@@ -4,10 +4,10 @@ All my dev configs in one place
 
 ## Apps Configured
 
+- AI-Rules
 - Ghostty
 - Homebrew
 - Zed
-- ai-rules
 
 ## Installation
 
