@@ -2,10 +2,11 @@ name: Auto-Generate README
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
     paths-ignore:
-      - "README.md"
-      - ".github/**"
+      - README.md
+      - .github/**
   workflow_dispatch:
 
 jobs:
@@ -33,28 +34,27 @@ jobs:
           import os
           from datetime import datetime
 
-          # Get app folders (exclude .github, secret, and hidden files)
-          app_folders = []
-          for item in os.listdir('.'):
-              if os.path.isdir(item) and not item.startswith('.') and item != 'secret':
-                  app_folders.append(item)
+          # Get app folders
+          app_folders = sorted([
+              item for item in os.listdir('.')
+              if os.path.isdir(item) and not item.startswith('.') and item != 'secret'
+          ])
 
-          app_folders.sort()
-
-          # Generate README content
+          # Build README content as list
           readme_lines = [
               "# .config",
               "",
-              "All my dev configs in one place",
+              "All my dev configs in one place.",
               "",
-              "## Apps Configured",
+              "## Apps",
               ""
           ]
 
-          # Add app list
+          # Add app folders
           for app in app_folders:
               readme_lines.append(f"- {app}")
 
+          # Add remaining content
           readme_lines.extend([
               "",
               "## Installation",
@@ -66,11 +66,10 @@ jobs:
               "",
               "## Security",
               "",
-              "This repository uses a dual-layer approach:",
-              "- Public repo: Contains configurations with placeholders for sensitive data",
-              "- Private submodule (secret/): Stores actual credentials and tokens",
+              "- **Public repository**: Config files with placeholder values for sensitive data",
+              "- **Private submodule** (`secret/`): Raw config files containing actual API keys, tokens, and credentials",
               "",
-              "This allows me to share my configs publicly while keeping sensitive data secure.",
+              "When setting up a new machine, the private submodule automatically provides all the real credentials.",
               "",
               "## License",
               "",
@@ -81,24 +80,22 @@ jobs:
               f"Auto-generated on {datetime.now().strftime('%Y-%m-%d')}"
           ])
 
-          readme_content = '\n'.join(readme_lines)
+          # Write README
+          with open('README.md', 'w') as f:
+              f.write('\n'.join(readme_lines))
 
-          with open('README.md', 'w', encoding='utf-8') as f:
-              f.write(readme_content)
-
-          print("README.md generated successfully!")
+          print(f"README generated with {len(app_folders)} apps")
           EOF
 
       - name: Commit Changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-
-          if [[ `git status --porcelain` ]]; then
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
             git add README.md
             git commit -m "Auto-update README"
             git push
-            echo "README updated!"
-          else
-            echo "No changes to commit"
+            echo "README updated"
           fi
