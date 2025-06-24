@@ -1,27 +1,45 @@
-theme = xcodedarkhc
-background = #1f1f24
-selection-background = #43454b
-selection-foreground = #ffffff
-cursor-color = #ffffff
-cursor-text = #1f1f24
-palette = 0=#43454b
-palette = 1=#ff8a7a
-palette = 2=#83c9bc
-palette = 3=#d9c668
-palette = 4=#4ec4e6
-palette = 5=#ff85b8
-palette = 6=#cda1ff
-palette = 7=#ffffff
-palette = 8=#838991
-palette = 9=#ff8a7a
-palette = 10=#b1faeb
-palette = 11=#ffa14f
-palette = 12=#6bdfff
-palette = 13=#ff85b8
-palette = 14=#e5cfff
-palette = 15=#ffffff
+# Core colors
+background = 0B0B0B
+foreground = FFFFFF
+cursor-color = FFFFFF
+
+# Selection colors
+selection-background = 3A3A3A
+selection-foreground = FFFFFF
+
+# Dogi Dark
+palette = 0=#3A3A3A
+palette = 1=#EF4444
+palette = 2=#34D399
+palette = 3=#FACC15
+palette = 4=#60A5FA
+palette = 5=#F472B6
+palette = 6=#22D3EE
+palette = 7=#E5E7EB
+palette = 8=#4A4A4A
+palette = 9=#EF4444
+palette = 10=#34D399
+palette = 11=#FACC15
+palette = 12=#60A5FA
+palette = 13=#F472B6
+palette = 14=#22D3EE
+palette = 15=#FFFFFF
+
+# Font settings
 font-size = 15
 font-family = JetBrains Mono
-working-directory = users/dogukanurker/Dev
+
+# Window settings
+working-directory = /Users/dogukanurker/Dev
 background-opacity = 0.8
-background-blur = 5
+background-blur-radius = 5
+
+# Quick terminal settings (position when toggled)
+quick-terminal-position = top
+
+# Keybindings
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+# Window padding for cleaner look
+window-padding-x = 5
+window-padding-y = 5
