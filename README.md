@@ -8,6 +8,7 @@ All my dev configs in one place.
 - Ghostty
 - Homebrew
 - Zed
+- zsh
 
 ## Installation
 
@@ -27,4 +28,4 @@ MIT License
 
 ---
 
-Auto-generated on 2025-06-21
+Auto-generated on 2025-06-24
