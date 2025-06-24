@@ -2,63 +2,38 @@ tap "heroku/brew"
 tap "homebrew/services"
 tap "kong/deck"
 tap "mongodb/brew"
-# Image format providing lossless and lossy compression for web images
+
 brew "webp"
-# Statistics utility to count lines of code
 brew "cloc"
-# Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
-# Dependency manager for Cocoa projects
 brew "cocoapods"
-# Command-line tools for fly.io services
 brew "flyctl"
-# GitHub command-line tool
 brew "gh"
-# Distributed revision control system
 brew "git"
-# Graph visualization software from AT&T and Bell Labs
 brew "graphviz"
-# Tools and libraries to manipulate images in many formats
 brew "imagemagick"
-# Platform built on V8 to build network applications
 brew "node"
-# Experimental optional static type checker for Python
 brew "mypy"
-# Execute binaries from Python packages in isolated environments
 brew "pipx"
-# Fast, disk space efficient package manager
 brew "pnpm"
-# Object-relational database system
 brew "postgresql@14", restart_service: :changed
-# Python version management
 brew "pyenv"
-# QR Code generation
 brew "qrencode"
-# Extremely fast Python linter, written in Rust
 brew "ruff"
-# Display directories as trees (with optional color/HTML output)
+brew "thefuck"
 brew "tree"
-# Watch files and take action when they change
 brew "watchman"
-# Everything you need to get started with Heroku
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
 brew "heroku/brew/heroku"
-# Declarative configuration for Kong
 brew "kong/deck/deck"
-# High-performance, schema-free, document-oriented database
 brew "mongodb/brew/mongodb-community"
-# Browser for SQLite databases
+
 cask "db-browser-for-sqlite"
-# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Desktop client for GitHub repositories
 cask "github"
-# Set of tools to manage resources and applications hosted on Google Cloud
 cask "google-cloud-sdk"
-# Open-source software for live streaming and screen recording
 cask "obs"
-# Collaboration platform for API development
 cask "postman"
-# System monitor for the menu bar
 cask "stats"
-# Multiplayer code editor
 cask "zed"
