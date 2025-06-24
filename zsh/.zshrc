@@ -38,3 +38,8 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # thefuck
 eval "$(thefuck --alias)"
+
+# eza config
+alias ls='eza -a --icons'
+alias lt='eza --tree --icons'
+alias lg='eza -la --git --icons'
