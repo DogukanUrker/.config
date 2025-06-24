@@ -29,3 +29,12 @@ eval "$(pyenv init -)"
 
 # Docker cleanup shortcut
 alias dc="docker system prune -af --volumes && docker network prune -f && docker volume prune -f"
+
+# zsh-autosuggestions
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# zsh-syntax-highlighting
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# thefuck
+eval "$(thefuck --alias)"
