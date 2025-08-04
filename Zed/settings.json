@@ -7,7 +7,9 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "buffer_font_size": null,
   "icon_theme": "Zed (Default)",
+  "format_on_save": "on",
   "collaboration_panel": {
     "button": false
   },
@@ -30,16 +32,19 @@
   },
   "context_servers": {
     "mcp-server-github": {
+      "source": "extension",
       "settings": {
         "github_personal_access_token": "<GH_TOKEN>"
       }
     },
     "mcp-server-context7": {
+      "source": "extension",
       "settings": {
         "default_minimum_tokens": "10000"
       }
     },
     "browser-tools-context-server": {
+      "source": "extension",
       "settings": {
         "port": 4827,
         "host": "127.0.0.1",
@@ -48,6 +53,7 @@
       }
     },
     "mcp-server-brave-search": {
+      "source": "extension",
       "settings": {
         "brave_api_key": "<BRAVE_API_KEY>"
       }
@@ -57,13 +63,59 @@
     "edit_prediction_provider": "zed"
   },
   "edit_predictions": {
+    "mode": "subtle",
     "disabled_globs": [".env", "leetcode.py"]
   },
   "agent": {
+    "inline_assistant_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4"
+    },
     "play_sound_when_agent_done": false,
     "always_allow_tool_actions": true,
     "default_profile": "god",
     "profiles": {
+      "write": {
+        "name": "Write",
+        "tools": {
+          "copy_path": true,
+          "create_directory": true,
+          "delete_path": true,
+          "diagnostics": true,
+          "edit_file": true,
+          "fetch": true,
+          "list_directory": true,
+          "project_notifications": true,
+          "move_path": true,
+          "now": true,
+          "find_path": true,
+          "read_file": true,
+          "grep": true,
+          "terminal": true,
+          "thinking": true,
+          "web_search": true
+        },
+        "enable_all_context_servers": true,
+        "context_servers": {
+          "mcp-server-sequential-thinking": {
+            "tools": {
+              "sequentialthinking": false
+            }
+          },
+          "mcp-server-context7": {
+            "tools": {
+              "resolve-library-id": false,
+              "get-library-docs": false
+            }
+          },
+          "mcp-server-brave-search": {
+            "tools": {
+              "brave_web_search": false,
+              "brave_local_search": false
+            }
+          }
+        }
+      },
       "god": {
         "name": "God",
         "tools": {
@@ -164,10 +216,9 @@
       }
     },
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-sonnet-4-thinking"
-    },
-    "version": "2"
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4"
+    }
   },
   "theme": "Dogi Dark",
   "autosave": "on_focus_change",
@@ -189,7 +240,8 @@
           }
         }
       ]
-    }
+    },
+    "Vue.js": { "show_edit_predictions": true, "format_on_save": "off" }
   },
   "lsp": {
     "ruff": {
