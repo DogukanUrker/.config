@@ -28,4 +28,4 @@ MIT License
 
 ---
 
-Auto-generated on 2025-08-04
+Auto-generated on 2025-09-04
