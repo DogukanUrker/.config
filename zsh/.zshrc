@@ -86,9 +86,7 @@ alias dc="docker system prune -af --volumes && docker network prune -f && docker
 alias brewup="brew update && brew upgrade && brew upgrade --cask && brew autoremove && brew cleanup -s && rm -rf \"\$(brew --cache)\" && brew doctor"
 
 # Git Rebase
-alias gr='f() {
-  git checkout "$1" && \
+alias gr='current_branch=$(git branch --show-current) && \
   git fetch origin && \
   git rebase origin/main && \
-  git push --force
-}; f'
+  git push --force'
