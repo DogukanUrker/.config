@@ -17,8 +17,10 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # ============================================================================
 
 # Python & Pyenv
-alias python=python3.13
-alias pip=pip3.13
+alias python=python3.14
+alias pip=pip3.14
+alias python3=python3.10
+alias pip3=pip3.10
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
