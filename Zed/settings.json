@@ -7,10 +7,15 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "buffer_font_size": null,
+  "disable_ai": false,
+  "buffer_font_size": 16,
+  "ui_font_size": 16,
   "icon_theme": "Zed (Default)",
   "format_on_save": "on",
   "collaboration_panel": {
+    "button": false
+  },
+  "git_panel": {
     "button": false
   },
   "search": {
@@ -20,7 +25,7 @@
     "button": false
   },
   "outline_panel": {
-    "button": false
+    "button": true
   },
   "debugger": {
     "button": false
@@ -32,28 +37,24 @@
   },
   "context_servers": {
     "mcp-server-github": {
-      "source": "extension",
       "settings": {
         "github_personal_access_token": "<GH_TOKEN>"
       }
     },
     "mcp-server-context7": {
-      "source": "extension",
       "settings": {
         "default_minimum_tokens": "10000"
       }
     },
     "browser-tools-context-server": {
-      "source": "extension",
       "settings": {
         "port": 4827,
         "host": "127.0.0.1",
-        "server_command": "npx",
+        "server_command": "bunx",
         "server_args": ["@agentdeskai/browser-tools-server@1.2.0"]
       }
     },
     "mcp-server-brave-search": {
-      "source": "extension",
       "settings": {
         "brave_api_key": "<BRAVE_API_KEY>"
       }
@@ -68,7 +69,7 @@
   },
   "agent": {
     "inline_assistant_model": {
-      "provider": "zed.dev",
+      "provider": "copilot_chat",
       "model": "claude-sonnet-4"
     },
     "play_sound_when_agent_done": false,
@@ -119,6 +120,7 @@
       "god": {
         "name": "God",
         "tools": {
+          "project_notifications": true,
           "web_search": true,
           "thinking": true,
           "terminal": true,
@@ -140,6 +142,10 @@
         "context_servers": {
           "mcp-server-brave-search": {
             "tools": {
+              "brave_summarizer": true,
+              "brave_video_search": true,
+              "brave_news_search": true,
+              "brave_image_search": true,
               "brave_web_search": true,
               "brave_local_search": true
             }
@@ -157,6 +163,20 @@
           },
           "mcp-server-github": {
             "tools": {
+              "sub_issue_write": true,
+              "search_pull_requests": true,
+              "pull_request_review_write": true,
+              "pull_request_read": true,
+              "list_releases": true,
+              "list_issue_types": true,
+              "issue_write": true,
+              "issue_read": true,
+              "get_teams": true,
+              "get_team_members": true,
+              "get_release_by_tag": true,
+              "get_latest_release": true,
+              "get_label": true,
+              "add_comment_to_pending_review": true,
               "submit_pending_pull_request_review": true,
               "mark_all_notifications_read": true,
               "manage_repository_notification_subscription": true,
@@ -217,7 +237,7 @@
     },
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4"
+      "model": "claude-sonnet-4.5"
     }
   },
   "theme": "Dogi Dark",
@@ -226,13 +246,13 @@
     "Python": {
       "show_edit_predictions": true,
       "format_on_save": "on",
-      "language_servers": ["ruff"],
+      "language_servers": ["ty", "ruff"],
       "formatter": [
         {
-          "code_actions": {
-            "source.organizeImports.ruff": true,
-            "source.fixAll.ruff": true
-          }
+          "code_action": "source.organizeImports.ruff"
+        },
+        {
+          "code_action": "source.fixAll.ruff"
         },
         {
           "language_server": {
@@ -241,7 +261,9 @@
         }
       ]
     },
-    "Vue.js": { "show_edit_predictions": true, "format_on_save": "off" }
+    "Vue.js": { "show_edit_predictions": true, "format_on_save": "off" },
+    "JavaScript": { "show_edit_predictions": true, "format_on_save": "off" },
+    "HTML": { "show_edit_predictions": true, "format_on_save": "off" }
   },
   "lsp": {
     "ruff": {
@@ -250,6 +272,14 @@
           "lint": {
             "extendSelect": ["I"]
           }
+        }
+      }
+    },
+    "ty": {
+      "settings": {
+        "diagnosticMode": "workspace", // openFilesOnly
+        "experimental": {
+          "rename": true
         }
       }
     }
